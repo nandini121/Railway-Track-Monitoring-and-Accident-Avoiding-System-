@@ -1,0 +1,46 @@
+// Define the pin numbers for the proximity sensors and LEDs
+const int sensorPin1 = 2;  // Proximity sensor 1 pin
+const int sensorPin2 = 3;  // Proximity sensor 2 pin
+const int ledPin = 13;     // Built-in LED pin (to indicate an obstacle)
+
+// Variables to store sensor values
+int sensorValue1 = 0;
+int sensorValue2 = 0;
+
+void setup() {
+  // Initialize the serial communication
+  Serial.begin(9600);
+  
+  // Initialize the sensor pins as input
+  pinMode(sensorPin1, INPUT);
+  pinMode(sensorPin2, INPUT);
+  
+  // Initialize the LED pin as output
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  // Read the sensor values
+  sensorValue1 = digitalRead(sensorPin1);
+  sensorValue2 = digitalRead(sensorPin2);
+  
+  // Print sensor values to the Serial Monitor for debugging
+  Serial.print("Sensor 1: ");
+  Serial.println(sensorValue1);
+  Serial.print("Sensor 2: ");
+  Serial.println(sensorValue2);
+
+  // Check if any sensor detects an obstacle
+  if (sensorValue1 == HIGH || sensorValue2 == HIGH) {
+    // Turn on the LED to indicate an obstacle
+    digitalWrite(ledPin, HIGH);
+    // Print a message to the Serial Monitor
+    Serial.println("Obstacle detected! Take necessary action.");
+  } else {
+    // Turn off the LED
+    digitalWrite(ledPin, LOW);
+  }
+
+  // Delay for a short period to avoid flooding the Serial Monitor
+  delay(500);
+}
